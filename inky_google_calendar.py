@@ -54,7 +54,7 @@ def draw_day_headers(box_width:int):
     draw.text(((box_width*6)+30,2), "SUN" , WHITE, font=semibold_font)
 
 def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, events:List[str], today=False):
-    date_box_height = 20
+    date_box_height = 15
     # draw date background
     colour = YELLOW
     if today:
@@ -70,10 +70,10 @@ def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, even
         center_start_pos = 27
 
     # date header
-    draw.text((x + center_start_pos, y+1), today_string , WHITE, font=semibold_font)
+    draw.text((x + center_start_pos, y-2), today_string , WHITE, font=semibold_font)
 
     # general y offset
-    offset_y = y + 20
+    offset_y = y + (date_box_height -2)
 
     # event strings
     if len(events) > 0:
@@ -82,8 +82,13 @@ def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, even
         event_count = 0
         for event in events:
             if event_count < 20:
-                draw.text((event_x, event_y), event.title[:13] , BLACK, font=light_font)
-                event_y = event_y + 15
+                friendly_time = event.start.strftime("%H:%M")
+                if event.end:
+                    friendly_time_end = event.end.strftime("%H:%M")
+                    friendly_time = str("%s - %s" % (friendly_time, friendly_time_end))
+                draw.text((event_x, event_y), friendly_time , BLUE, font=light_font)
+                draw.text((event_x, event_y+13), event.title[:13] , BLACK, font=normal_font)
+                event_y = event_y + 30
                 event_count = event_count +1
 
     # draw containing box
@@ -93,8 +98,7 @@ def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, even
         
     draw.line((x, offset_y, right_edge, offset_y), colour)
     draw.line((x, offset_y, x, offset_y+box_height), colour)
-    draw.line((x, offset_y+box_height, right_edge, offset_y+box_height), colour)
-    draw.line((right_edge, offset_y, right_edge, offset_y+box_height), colour)
+    
 
 calendar_data = Google_Calendar()
 
@@ -104,7 +108,7 @@ y = 21
 y_max = 488
 day_count = 0
 box_width = 86
-box_height = 90
+box_height = 93
 today = calendar_data.events.get_day_from_dt(datetime.now())
 draw_day_headers(box_width)
 for day in calendar_data.events.dates:
@@ -123,6 +127,9 @@ for day in calendar_data.events.dates:
     else:
         x = 1
         y = y + box_height + 15
+# right and bottom edges
+draw.line((598,0,598,446), YELLOW)
+draw.line((0,446,598,446), YELLOW)
 
 
 
