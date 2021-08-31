@@ -37,12 +37,6 @@ PATH = os.path.dirname(__file__)
 img = Image.open(os.path.join(PATH, "resources/backdrop.png")).resize(inky.resolution)
 draw = ImageDraw.Draw(img)
 
-now_string = time.strftime("%d/%m %H:%M")
-
-draw.text((0, 0), now_string, inky.BLACK, font=light_font)
-draw.text((0, 12), now_string, inky.BLACK, font=normal_font)
-draw.text((0, 24), now_string, inky.BLACK, font=semibold_font)
-
 def draw_day_headers(box_width:int):
     draw.rectangle((1, 1, 600, 20), fill=ORANGE)
     draw.text((30,2), "MON" , WHITE, font=semibold_font)
@@ -127,16 +121,10 @@ for day in calendar_data.events.dates:
     else:
         x = 1
         y = y + box_height + 15
+
 # right and bottom edges
 draw.line((598,0,598,446), YELLOW)
 draw.line((0,446,598,446), YELLOW)
-
-
-
-#single_day_events = Day(date=datetime.now(), events=['thing 1', 'thing 2'])
-
-# draw_day(1, 100, single_day_events)
-# draw_day(86, 100, single_day_events)
 
 inky.set_image(img)
 inky.show()
