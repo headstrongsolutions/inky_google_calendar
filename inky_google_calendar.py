@@ -39,7 +39,7 @@ draw = ImageDraw.Draw(img)
 
 def draw_day_headers(box_width:int):
     draw.rectangle((1, 1, 600, 20), fill=ORANGE)
-    draw.text((30,2), "MON" , WHITE, font=semibold_font)
+    draw.text(((box_width*0)+30,2), "MON" , WHITE, font=semibold_font)
     draw.text(((box_width*1)+30,2), "TUE" , WHITE, font=semibold_font)
     draw.text(((box_width*2)+30,2), "WED" , WHITE, font=semibold_font)
     draw.text(((box_width*3)+30,2), "THU" , WHITE, font=semibold_font)
