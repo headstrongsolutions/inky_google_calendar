@@ -1,6 +1,6 @@
 # Inky Impression Google Calendar
 
-I needed a on-screen calendar, but this only needs to update a couple of times a day (at best) so opted for a Pimoroni Inky Impression device, as this supports 7 colours and has a resolution of 600 X 488.
+I needed a on-desk live calendar but as this only needs to update a couple of times a day (at best) I opted for a Pimoroni Inky Impression e-ink screen as this supports 7 colours and has a resolution of 600 X 488.
 
 [Pimoroni Inky Impression](https://shop.pimoroni.com/products/inky-impression)
 
