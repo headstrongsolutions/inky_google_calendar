@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime 
 from typing import List
+from inky import inky_uc8159
 
 #from inky.inky_uc8159 import Inky
 # To simulate:
@@ -38,23 +39,25 @@ img = Image.open(os.path.join(PATH, "resources/backdrop.png")).resize(inky.resol
 draw = ImageDraw.Draw(img)
 
 def draw_day_headers(box_width:int):
-    draw.rectangle((1, 1, 600, 20), fill=ORANGE)
-    draw.text(((box_width*0)+30,2), "MON" , WHITE, font=semibold_font)
-    draw.text(((box_width*1)+30,2), "TUE" , WHITE, font=semibold_font)
-    draw.text(((box_width*2)+30,2), "WED" , WHITE, font=semibold_font)
-    draw.text(((box_width*3)+30,2), "THU" , WHITE, font=semibold_font)
-    draw.text(((box_width*4)+30,2), "FRI" , WHITE, font=semibold_font)
-    draw.text(((box_width*5)+30,2), "SAT" , WHITE, font=semibold_font)
-    draw.text(((box_width*6)+30,2), "SUN" , WHITE, font=semibold_font)
+    draw.rectangle((1, 1, 600, 20), fill=inky.ORANGE)
+    draw.text(((box_width*0)+30,2), "MON" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*1)+30,2), "TUE" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*2)+30,2), "WED" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*3)+30,2), "THU" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*4)+30,2), "FRI" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*5)+30,2), "SAT" , inky.WHITE, font=semibold_font)
+    draw.text(((box_width*6)+30,2), "SUN" , inky.WHITE, font=semibold_font)
 
 def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, events:List[str], today=False):
     date_box_height = 15
     # draw date background
-    colour = YELLOW
+    colour = inky.YELLOW
     if today:
-        colour = GREEN
+        colour = inky.GREEN
     draw.rectangle((x, y, x+box_width, y+date_box_height), 
                     fill=colour)
+    draw.rectangle((x, y+date_box_height, x+box_width, y+box_height+date_box_height-1), 
+                    fill=inky.WHITE)
 
     # write date
     center_start_pos = 0
@@ -64,7 +67,7 @@ def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, even
         center_start_pos = 27
 
     # date header
-    draw.text((x + center_start_pos, y-2), today_string , WHITE, font=semibold_font)
+    draw.text((x + center_start_pos, y-2), today_string , inky.WHITE, font=semibold_font)
 
     # general y offset
     offset_y = y + (date_box_height -2)
@@ -80,8 +83,8 @@ def draw_day(x:int, y:int, box_width:int, box_height:int, today_string:str, even
                 if event.end:
                     friendly_time_end = event.end.strftime("%H:%M")
                     friendly_time = str("%s - %s" % (friendly_time, friendly_time_end))
-                draw.text((event_x, event_y), friendly_time , BLUE, font=light_font)
-                draw.text((event_x, event_y+13), event.title[:13] , BLACK, font=normal_font)
+                draw.text((event_x, event_y), friendly_time , inky.BLUE, font=light_font)
+                draw.text((event_x, event_y+13), event.title[:13] , inky.BLACK, font=normal_font)
                 event_y = event_y + 30
                 event_count = event_count +1
 
@@ -123,8 +126,8 @@ for day in calendar_data.events.dates:
         y = y + box_height + 15
 
 # right and bottom edges
-draw.line((598,0,598,446), YELLOW)
-draw.line((0,446,598,446), YELLOW)
+draw.line((598,0,598,446), inky.YELLOW)
+draw.line((0,446,598,446), inky.YELLOW)
 
 inky.set_image(img)
 inky.show()
