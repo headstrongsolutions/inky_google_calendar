@@ -157,5 +157,3 @@ inky.set_image(img, saturation=1)
 inky.show()
 # To simulate:
 #inky.wait_for_window_close()
-
-
