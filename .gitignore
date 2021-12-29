@@ -31,3 +31,4 @@ sphinx.virtualenv
 token.json
 credentials.json
 .vscode/launch.json
+client_secrets.json
