@@ -1,5 +1,6 @@
 from __future__ import print_function
 import datetime, time
+import json
 import os.path
 from sys import maxsize
 from googleapiclient.discovery import build
@@ -26,6 +27,14 @@ class Google_Calendar:
         # time.
         if os.path.exists('token.json'):
             creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+            with open('token.json', 'r+') as jsonFile:
+                originalToken = json.loads(creds.to_json())
+                if originalToken != creds:
+                    jsonFile.seek(0) # go to first char pos
+                    json.dump(json.loads(creds.to_json()), jsonFile, indent=6)
+                    jsonFile.truncate
+                else:
+                    print('creds matches that in token')
         # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
